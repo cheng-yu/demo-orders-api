@@ -16,8 +16,8 @@ class PriceHandler implements OrderFieldHandlerInterface
         }
     }
 
-    public function transform($value)
+    public function transform($order): array
     {
-        return $value; 
+        return $order; 
     }
 }

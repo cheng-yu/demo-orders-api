@@ -21,13 +21,16 @@ class CurrencyHandler implements OrderFieldHandlerInterface
         }
     }
 
-    public function transform($value)
+    public function transform($order): array
     {
-        if ($value === 'USD') {
-            $this->priceHandler->validate($this->priceHandler->transform($price = request('price') * 31));
-            return 'TWD';
+
+        if ($order['currency'] === 'USD') {
+            $price = $order['price'] * 31;
+            $this->priceHandler->validate($price);
+            $order['price'] = $price;
+            $order['currency'] = 'TWD';
         }
 
-        return $value;
+        return $order;
     }
 }

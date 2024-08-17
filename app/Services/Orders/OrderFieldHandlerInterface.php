@@ -5,5 +5,5 @@ namespace App\Services\Orders;
 interface OrderFieldHandlerInterface
 {
     public function validate($value);
-    public function transform($value);
+    public function transform($order): array;
 }

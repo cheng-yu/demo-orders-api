@@ -20,7 +20,7 @@ class OrderService
         foreach ($this->handlers as $field => $handler) {
             if (isset($orderData[$field])) {
                 $handler->validate($orderData[$field]);
-                $orderData[$field] = $handler->transform($orderData[$field]);
+                $orderData = $handler->transform($orderData);
             }
         }
 
