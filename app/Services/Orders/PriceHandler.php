@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Order;
+namespace App\Services\Orders;
 
 
-class CurrencyHandler implements OrderFieldHandlerInterface
+class PriceHandler implements OrderFieldHandlerInterface
 {
     public function validate($value)
     {
