@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Orders;
+namespace App\Services\Orders\Handlers;
 
 class DefaultHandler implements OrderFieldHandlerInterface
 {

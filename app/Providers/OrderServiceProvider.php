@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Orders\OrderHandlerFactory;
-use App\Services\Orders\OrderHandlerFactoryInterface;
+use App\Services\Orders\Handlers\OrderHandlerFactory;
+use App\Services\Orders\Handlers\OrderHandlerFactoryInterface;
 use App\Services\Orders\OrderService;
 use App\Services\Orders\OrderServiceInterface;
 

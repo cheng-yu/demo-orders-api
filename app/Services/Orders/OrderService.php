@@ -2,6 +2,8 @@
 
 namespace App\Services\Orders;
 
+use App\Services\Orders\Handlers\OrderHandlerFactoryInterface;
+
 class OrderService implements OrderServiceInterface
 {
     protected $handlers;
