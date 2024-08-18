@@ -6,7 +6,7 @@ use App\Services\Orders\Handlers\OrderHandlerFactoryInterface;
 
 class OrderService implements OrderServiceInterface
 {
-    protected $handlers;
+    private $factory;
 
     public function __construct(OrderHandlerFactoryInterface $orderHandlerFactory)
     {
