@@ -2,7 +2,7 @@
 
 namespace App\Services\Orders;
 
-class OrderService
+class OrderService implements OrderServiceInterface
 {
     protected $handlers;
 
