@@ -7,6 +7,8 @@ use Illuminate\Http\JsonResponse;
 
 class CurrencyHandler implements OrderFieldHandlerInterface
 {
+    private $priceHandler;
+
     public function __construct(PriceHandler $priceHandler)
     {
         $this->priceHandler = $priceHandler;
