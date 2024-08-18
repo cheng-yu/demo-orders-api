@@ -1,3 +1,5 @@
+# API 實作
+
 ### Used Design Pattern
 1. **策略模式**
     - 因需求是根據不同欄位有不同的驗證以及轉換的規則，並且考量到未來可能會新增其他欄位的驗證規則，所以採用策略模式。實作的方式是定義 `OrderFieldHandlerInterface (Strategy)` 並且根據不同欄位實作對應 `FieldHandler (ConcreteStrategy)` 來處理欄位的驗證與轉換邏輯，由 `OrderService (Context)` 引用並觸發驗證與轉換。
@@ -25,15 +27,40 @@
    - 讓 `UserService` 引用 `OrderHandlerFactoryInterface` 這個介面，而不是直接引用 `OrderHandlerFactory` 這個實體類別，進而實現 DIP。`OrderHandlerFactory` 需要實現 `OrderHandlerFactoryInterface`，在 `Interface` 沒有變動的情況下，可以確保 `Factory` 的改動不會影響到 `Service`。
 
 ### Run the App
-##### Clone project
-- `git clone https://github.com/cheng-yu/demo-orders-api.git`
-- `cd demo-orders-api`
-##### Build and run with Docker
-- `docker build -t demo-orders-api .`
-- `docker run -p 8000:8000 --rm -d --name demo demo-orders-api`
-##### Show logs
-- `docker logs -f demo`
-##### Run tests
-- `docker exec -it demo vendor/bin/pest`
-##### Stop App
-- `docker stop demo`
+1. **Clone project**
+    - `git clone https://github.com/cheng-yu/demo-orders-api.git`
+    - `cd demo-orders-api`
+2. **Build and run with Docker**
+    - `docker build -t demo-orders-api .`
+    - `docker run -p 8000:8000 --rm -d --name demo demo-orders-api`
+3. **Show logs**
+    - `docker logs -f demo`
+4. **Run tests**
+    - `docker exec -it demo vendor/bin/pest`
+5. **Stop App**
+    - `docker stop demo`
+
+# 資料庫測驗
+### 一、SQL 語法
+```sql
+SELECT bnbs.id as bnb_id, bnbs.name as bnb_name, SUM(orders.amount) AS may_amount
+FROM bnbs
+JOIN orders ON orders.bnb_id = bnbs.id
+WHERE
+  orders.currency = 'TWD' AND
+  order.created_at >= '2023-5-31' AND
+  orders.created_at < '2023-6-1'
+GROUP BY bnbs.id, bnbs.name
+ORDER BY may_amount DESC
+LIMIT 10
+```
+
+### 二、優化查詢
+1. Caching
+    - 可使用 Cache 機制存取 Query 過後的結果，進而加速第一次查詢後的速度。
+2. Indexing
+    - 可針對經常查詢的欄位新增 index，也可針對多個欄位組合新增複合 index。
+3. Partition
+    - 可針對 `orders` 的 `created_at` 列進行資料表的分區，這樣在查找特定日期的資料時，只需要掃描特定分區。
+4. 分析語法
+    - 可使用 `EXPLAIN` 語法分析 sql 執行時的細節。
