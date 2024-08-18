@@ -6,22 +6,17 @@ class OrderService implements OrderServiceInterface
 {
     protected $handlers;
 
-    public function __construct(NameHandler $nameHandler, PriceHandler $priceHandler, CurrencyHandler $currencyHandler)
+    public function __construct(OrderHandlerFactoryInterface $orderHandlerFactory)
     {
-        $this->handlers = [
-            'name' => $nameHandler,
-            'price' => $priceHandler,
-            'currency' => $currencyHandler,
-        ];
+        $this->factory = $orderHandlerFactory;
     }
 
     public function process(array $orderData): array
     {
-        foreach ($this->handlers as $field => $handler) {
-            if (isset($orderData[$field])) {
-                $handler->validate($orderData[$field]);
-                $orderData = $handler->transform($orderData);
-            }
+        foreach ($orderData as $field => $value) {
+            $handler = $this->factory->make($field);
+            $handler->validate($value);
+            $orderData = $handler->transform($orderData);
         }
 
         return $orderData;
